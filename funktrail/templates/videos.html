@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FunkTrail — Video</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav>
+  <a href="{{ url_for('index') }}">Home</a>
+  <a href="{{ url_for('photos_page') }}">Photos</a>
+  <a href="{{ url_for('videos_page') }}">Videos</a>
+  <a href="{{ url_for('biografia_page') }}">Biography</a>
+  <a href="{{ url_for('concerti_page') }}">Events</a>
+  <a href="{{ url_for('shop_page') }}">Shop</a>
+  <a href="{{ url_for('contact_page') }}">Contact</a>
+</nav>
+
+      <header class="subpage-top">
+          <h1>FUNKTRAIL</h1>
+          <p class="subtitle">Galleria Video</p>
+      </header>
+  </div>
+
+  <!-- Parte inferiore scrollabile: video -->
+  <div class="scroll-area container">
+      <div class="video-grid">
+          {% for v in videos %}
+          <div class="video-card">
+              
+              <!-- 🔹 Miniatura video: fotogramma statico -->
+              <video class="video-thumbnail" preload="metadata" data-video="{{ v.video }}">
+                  <source src="{{ v.video }}#t=0.5" type="video/mp4">
+                  <source src="{{ v.video }}#t=0.5" type="video/quicktime">
+                  Il tuo browser non supporta il video.
+              </video>
+              <p class="video-filename">{{ v.name }}</p>
+          </div>
+          {% endfor %}
+      </div>
+  </div>
+
+  <!-- Overlay video -->
+  <div class="overlay" id="overlay">
+      <span class="close-btn" id="close-overlay">&times;</span>
+      <video id="overlay-video" controls style="display:none;"></video>
+  </div>
+
+  <!-- Script -->
+  <script>
+    const overlay = document.getElementById('overlay');
+    const overlayVideo = document.getElementById('overlay-video');
+    const closeBtn = document.getElementById('close-overlay');
+
+    document.querySelectorAll('video.video-thumbnail[data-video]').forEach(vid => {
+      vid.addEventListener('click', () => {
+        overlay.style.display = 'flex';
+        overlayVideo.src = vid.dataset.video;
+        overlayVideo.style.display = 'block';
+        overlayVideo.play();
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      overlayVideo.pause();
+      overlayVideo.src = '';
+    });
+  </script>
+
+  <footer class="site-footer">
+      <small>© 2025 FunkTrail.it — Tutti i diritti riservati</small>
+  </footer>
+
+</body>
+</html>

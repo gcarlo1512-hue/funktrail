@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FunkTrail — Contact</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="contact">
+
+  <!-- Intestazione fissa -->
+  <div class="fixed-header">
+    <header class="site-header subpage-top">
+      <h1>FUNKTRAIL</h1>
+      <p class="subtitle">Contatti</p>
+    </header>
+
+<nav>
+  <a href="{{ url_for('index') }}">Home</a>
+  <a href="{{ url_for('photos_page') }}">Photos</a>
+  <a href="{{ url_for('videos_page') }}">Videos</a>
+  <a href="{{ url_for('biografia_page') }}">Biography</a>
+  <a href="{{ url_for('concerti_page') }}">Events</a>
+  <a href="{{ url_for('shop_page') }}">Shop</a>
+  <a href="{{ url_for('contact_page') }}">Contact</a>
+</nav>
+
+  </div>
+
+  <!-- Contenuto scrollabile -->
+  <div class="scrollable-content">
+  <div class="contact-card">
+  <div class="contact-content">
+    <pre>{{ contact_info }}</pre>
+  </div>
+</div>
+  </div>
+
+  <footer class="site-footer">
+    <small>© 2025 FunkTrail.it — Tutti i diritti riservati</small>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,578 @@
+/* RESET BASE */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #000;
+    color: #fff;
+}
+body.home { overflow: hidden; }
+
+/* COPERTINA FULLSCREEN */
+.home-cover {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+.home-cover .cover-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    filter: brightness(0.75);
+}
+
+/* MENU PRINCIPALE */
+nav {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 200;
+    text-align: right;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 0.8em;
+    font-weight: bold;
+}
+nav a.active, nav a:hover {
+    color: #ffcc33;
+}
+
+/* TITOLO CENTRALE HOME */
+.site-header {
+    position: absolute;
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 10;
+    color: white;
+    opacity: 0;
+    animation: fadeInToTop 1.8s ease forwards;
+}
+.site-header h1 {
+    font-size: 6em;
+    margin: 0;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    font-weight: 900;
+    background: linear-gradient(90deg, #ff0080, #ff8c00, #40e0d0, #ff0080);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientMove 5s ease infinite, glow 2s infinite alternate;
+}
+.site-header .subtitle {
+    font-size: 2em;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(255,0,128,0.7);
+    margin-top: 10px;
+}
+
+/* ANIMAZIONI */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes glow {
+    from { text-shadow: 0 0 10px rgba(255,0,128,0.8); }
+    to { text-shadow: 0 0 30px rgba(255,255,0,1); }
+}
+@keyframes fadeInToTop {
+    from { opacity: 0; transform: translateX(-50%) translateY(-6%); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* FOOTER */
+.site-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background: rgba(0,0,0,0.6);
+    padding: 0.8em;
+    font-size: 0.9em;
+    color: #ccc;
+}
+
+/* CONTENITORI GENERICI */
+.container {
+    padding: 2em;
+    background: #111;
+}
+
+/* --------------------------- FOTO --------------------------- */
+.photo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+    padding-bottom: 2em;
+}
+.photo-card {
+    width: 180px;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 8px;
+    text-align: center;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.4);
+}
+.photo-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 8px;
+}
+.photo-thumbnail:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 12px rgba(255,255,255,0.4);
+}
+.photo-filename {
+    display: block;
+    font-size: 0.85em;
+    color: #fff;
+    text-align: center;
+    margin-top: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+/* --------------------------- VIDEO --------------------------- */
+.video-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+    padding-bottom: 2em;
+}
+.video-card {
+    width: 180px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 8px;
+    text-align: center;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.4);
+}
+.video-thumbnail {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 8px;
+    background-color: #000;
+    display: block;
+}
+.video-thumbnail:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 12px rgba(255,255,255,0.4);
+}
+.video-filename {
+    display: block;
+    font-size: 0.9em;
+    color: #fff;
+    text-align: center;
+    margin-top: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+/* --------------------------- OVERLAY (POPUP) --------------------------- */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.95);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    flex-direction: column;
+}
+.overlay video {
+    max-width: 80vw;
+    max-height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0 0 25px rgba(255,255,255,0.4);
+    outline: none;
+}
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 1em;
+  cursor: pointer;
+  z-index: 1001;
+  transition: 0.3s;
+}
+.close-btn:hover {
+  background: rgba(255,255,255,0.4);
+  color: #000;
+}
+
+/* --------------------------- TITOLI SOTTOMENU --------------------------- */
+.subpage-top {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+    z-index: 100;
+}
+.subpage-top h1 {
+    font-size: 3em;
+    letter-spacing: 4px;
+    margin: 0;
+    color: #ffcc00;
+    background: linear-gradient(90deg, #ff0080, #ff8c00, #40e0d0, #ff0080);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientMove 5s ease infinite, glow 2s infinite alternate;
+}
+.subpage-top .subtitle {
+    font-size: 1.3em;
+    color: #fff;
+    margin-top: 8px;
+    text-shadow: 1px 1px 5px rgba(255,255,255,0.3);
+}
+
+.container { padding-top: 160px; }
+.video-thumbnail {
+    image-orientation: from-image;
+    transform: rotate(0deg);
+    pointer-events: auto;
+}
+
+/* --------------------------- SHOP --------------------------- */
+.shop-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+    padding-bottom: 2em;
+}
+
+.shop-card {
+    width: 180px;
+    height: 220px;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.shop-card:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 12px rgba(255,255,255,0.4);
+}
+
+.shop-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.shop-name {
+    font-size: 0.9em;
+    color: #fff;
+    margin-top: 8px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.shop-price {
+    font-size: 0.85em;
+    color: #ffcc33;
+    margin-top: 4px;
+}
+
+/* --------------------------- POPUP SHOP --------------------------- */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    overflow: auto;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.popup-content img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.popup-content p {
+    margin: 5px 0;
+    color: #fff;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.popup .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2em;
+    color: #fff;
+    cursor: pointer;
+}
+.logo {
+    position: absolute;
+    top: 40px;
+    left: 30px;
+    width: 200px; /* o la dimensione che preferisci */
+}
+
+/* ========================================================= */
+/* 📱 RESPONSIVE DESIGN — adattamento per smartphone e tablet */
+/* ========================================================= */
+
+@media (max-width: 1024px) {
+  /* Tablet */
+  nav a {
+      font-size: 1em;
+      margin: 0 0.4em;
+  }
+  .site-header h1 {
+      font-size: 4em;
+  }
+  .site-header .subtitle {
+      font-size: 1.5em;
+  }
+  .photo-grid, .video-grid, .shop-grid {
+      justify-content: center;
+      gap: 0.6em;
+  }
+}
+/* --------------------------- BIOGRAFIA --------------------------- */
+.bio-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2em;
+    flex-wrap: wrap; /* utile per dispositivi piccoli */
+}
+
+.bio-foto {
+    flex: 1 1 15%;    
+}
+.bio-testo {
+    flex: 1 1 85%;    
+}
+
+
+
+.bio-foto img {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
+}
+
+.bio-testo p {
+    font-size: 1em;
+    line-height: 1em;
+    color: #fff;
+    margin-bottom: 1em;
+}
+
+.bio-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2em;
+    margin-bottom: 2em;
+    padding: 1.5em;
+    border: 4px solid #fff;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.05);
+}
+
+    
+@media (max-width: 600px) {
+  /* Smartphone */
+  nav {
+      top: 10px;
+      right: 10px;
+      text-align: center;
+  }
+
+/* ---------------------------FINE BIOGRAFIA --------------------------- */
+.bio-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2em;
+    flex-wrap: wrap; /* utile per dispositivi piccoli */
+}
+
+.bio-colonna {
+    flex: 1 1 40%;
+}
+
+.bio-foto img {
+    width: 100%;
+    max-width: 100px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
+}
+
+.bio-testo p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #fff;
+    margin-bottom: 1em;
+}
+/* --------------------------- BIOGRAFIA --------------------------- */
+
+
+
+  nav a {
+      display: inline-block;
+      font-size: 0.9em;
+      margin: 0 0.3em;
+      padding: 6px;
+  }
+
+  .site-header {
+      top: 20%;
+  }
+
+  .site-header h1 {
+      font-size: 2.6em;
+      letter-spacing: 3px;
+  }
+
+  .site-header .subtitle {
+      font-size: 1.1em;
+  }
+
+  .photo-grid, .video-grid, .shop-grid {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .photo-card, .video-card, .shop-card {
+      width: 90%;
+      height: auto;
+  }
+
+  .popup {
+      width: 90vw;
+      max-width: none;
+  }
+
+  .logo {
+      width: 130px;
+      top: 20px;
+      left: 20px;
+  }
+}
+
+.contact-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid #666;
+  border-radius: 12px;
+  padding: 40px;
+  width: 70%;
+  margin: 160px;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(255,255,255,0.25);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.contact-card h2 {
+  text-align: center;
+  color: #ffcc00;
+  font-size: 2em;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.contact-content {
+  font-size: 1.1em;
+  line-height: 1.8em;
+  white-space: pre-wrap;
+}
+
+.contact-content pre {
+  background: transparent;
+  color: #fff;
+  border: none;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* ========================================================= */
+/* 🧭 BLOCCA LO SCROLL SOLO NELLA PAGINA CONTACT             */
+/* ========================================================= */
+
+body.contact {
+  overflow: hidden;   /* disattiva lo scroll della pagina */
+  height: 100vh;      /* altezza = finestra del browser */
+}
+
+/* Centra la scheda contatti */
+body.contact .contact-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;               /* elimina margini extra */
+  width: 60%;
+  max-height: 70vh;        /* limita altezza scheda al 70% dello schermo */
+  overflow: hidden;        /* niente scroll interno */
+}

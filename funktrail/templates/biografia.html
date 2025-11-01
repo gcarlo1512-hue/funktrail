@@ -1,0 +1,91 @@
+
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FunkTrail — Biografia</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <!-- Intestazione fissa: menu + titolo -->
+  <div class="top-fixed">
+
+<nav>
+  <a href="{{ url_for('index') }}">Home</a>
+  <a href="{{ url_for('photos_page') }}">Photos</a>
+  <a href="{{ url_for('videos_page') }}">Videos</a>
+  <a href="{{ url_for('biografia_page') }}">Biography</a>
+  <a href="{{ url_for('concerti_page') }}">Events</a>
+  <a href="{{ url_for('shop_page') }}">Shop</a>
+  <a href="{{ url_for('contact_page') }}">Contact</a>
+</nav>
+
+      <header class="subpage-top">
+          <h1>FUNKTRAIL</h1>
+          <p class="subtitle">Biografia</p>
+      </header>
+  </div>
+
+  <!-- Contenuto -->
+  <div class="scroll-area container bio-page">
+ 
+  <!-- 🔹 BLOCCO 1 -->
+  <div class="bio-row">
+    <div class="bio-colonna bio-foto">
+      <img src="{{ url_for('static', filename='img/bio_foto.jpg') }}" alt="Foto Biografia">
+    </div>
+    <div class="bio-colonna bio-testo">
+      <p>
+        I FunkTrail nascono nel cuore del Veneto, con l’obiettivo di unire groove, soul e jazz-funk in una miscela esplosiva.  
+        La formazione include musicisti con esperienze internazionali e un amore condiviso per la musica dal vivo.
+      </p>
+      <p>
+        Il repertorio spazia da classici rivisitati a brani originali, tutti con un’unica missione: far muovere il pubblico.  
+        Ogni esibizione è un viaggio, ogni nota una dichiarazione d’identità musicale.
+      </p>
+    </div>
+  </div>
+
+  <!-- 🔹 BLOCCO 2 -->
+  <div class="bio-row">
+    <div class="bio-colonna bio-foto">
+      <img src="{{ url_for('static', filename='img/bio2.jpg') }}" alt="Foto 2">
+    </div>
+    <div class="bio-colonna bio-testo">
+      <p>
+        Nel corso degli anni, la band si è esibita in numerosi festival e locali del Nord Italia, portando sul palco un’energia contagiosa e un sound autentico.
+      </p>
+      <p>
+        Ogni concerto è pensato come un’esperienza unica, dove l’improvvisazione jazz incontra il groove più funk.
+      </p>
+    </div>
+  </div>
+
+  <!-- 🔹 BLOCCO 3 -->
+  <div class="bio-row">
+    <div class="bio-colonna bio-foto">
+      <img src="{{ url_for('static', filename='img/bio3.jpg') }}" alt="Foto 3">
+    </div>
+    <div class="bio-colonna bio-testo">
+      <p>
+        Il gruppo continua la propria ricerca sonora con nuove collaborazioni e produzioni originali, fondendo le radici soul con le influenze contemporanee.
+      </p>
+      <p>
+        FunkTrail è molto più di una band: è un viaggio nel ritmo, nella passione e nella libertà della musica.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+  
+</div>
+
+  <footer class="site-footer">
+    <small>© 2025 FunkTrail.it — Tutti i diritti riservati</small>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FunkTrail — Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="home">
+  <main class="home-cover">
+    <img src="{{ cover_image }}" alt="Copertina FunkTrail" class="cover-image">
+    <img src="static/img/logo.jpg" class="logo" alt="Logo FunkTrail">
+    <header class="site-header">
+      <h1>FUNKTRAIL</h1>
+      <p class="subtitle">Groove • Soul • Jazz Funk</p>
+    </header>
+<nav>
+  <a href="{{ url_for('index') }}">Home</a>
+  <a href="{{ url_for('photos_page') }}">Photos</a>
+  <a href="{{ url_for('videos_page') }}">Videos</a>
+  <a href="{{ url_for('biografia_page') }}">Biography</a>
+  <a href="{{ url_for('concerti_page') }}">Events</a>
+  <a href="{{ url_for('shop_page') }}">Shop</a>
+  <a href="{{ url_for('contact_page') }}">Contact</a>
+</nav>
+
+
+  </main>
+
+  <footer class="site-footer">
+    <small>© 2025 FunkTrail.it — Tutti i diritti riservati</small>
+  </footer>
+</body>
+</html>

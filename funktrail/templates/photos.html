@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FunkTrail — Foto</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <!-- Parte superiore fissa: menu + titolo -->
+  <div class="top-fixed">
+  
+<nav>
+  <a href="{{ url_for('index') }}">Home</a>
+  <a href="{{ url_for('photos_page') }}">Photos</a>
+  <a href="{{ url_for('videos_page') }}">Videos</a>
+  <a href="{{ url_for('biografia_page') }}">Biography</a>
+  <a href="{{ url_for('concerti_page') }}">Events</a>
+  <a href="{{ url_for('shop_page') }}">Shop</a>
+  <a href="{{ url_for('contact_page') }}">Contact</a>
+</nav>
+
+      <header class="subpage-top">
+          <h1>FUNKTRAIL</h1>
+          <p class="subtitle">Galleria Foto</p>
+      </header>
+  </div>
+
+  <!-- Parte inferiore scrollabile: foto -->
+  <div class="scroll-area container">
+      <div class="photo-grid">
+          {% for p in photos %}
+          <div class="photo-card">
+              <img src="{{ p }}" class="photo-thumbnail" data-full="{{ p }}" alt="Foto FunkTrail">
+          </div>
+          {% endfor %}
+      </div>
+  </div>
+
+  <!-- Overlay immagine -->
+  <div class="overlay" id="overlay">
+      <span class="close-btn" id="close-overlay">&times;</span>
+      <img id="overlay-img" style="display:none;">
+  </div>
+
+  <!-- Script per popup -->
+  <script>
+    const overlay = document.getElementById('overlay');
+    const overlayImg = document.getElementById('overlay-img');
+    const closeBtn = document.getElementById('close-overlay');
+
+    document.querySelectorAll('.photo-thumbnail').forEach(img => {
+      img.addEventListener('click', () => {
+        overlay.style.display = 'flex';
+        overlayImg.src = img.src;
+        overlayImg.style.display = 'block';
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      overlayImg.src = '';
+    });
+  </script>
+
+  <footer class="site-footer">
+      <small>© 2025 FunkTrail.it — Tutti i diritti riservati</small>
+  </footer>
+
+</body>
+</html>
