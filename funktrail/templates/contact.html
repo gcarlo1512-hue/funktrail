@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FunkTrail — Contact</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="contact">
+
+<!-- === MENU MOBILE POPUP RIDOTTO (solo smartphone) === -->
+<div class="mobile-menu-icon" onclick="toggleMenu()">☰</div>
+
+<nav id="mobileMenu" class="mobile-menu">
+  <a href="{{ url_for('index') }}">Home</a>
+  <a href="{{ url_for('photos_page') }}">Photo</a>
+  <a href="{{ url_for('videos_page') }}">Video</a>
+  <a href="{{ url_for('biografia_page') }}">Biography</a>
+  <a href="{{ url_for('concerti_page') }}">Events</a>
+  <a href="{{ url_for('shop_page') }}">Shop</a>
+  <a href="{{ url_for('contact_page') }}" class="active">Contacts</a>
+</nav>
+<!-- === FINE MENU MOBILE === -->
+
+
+<!-- === INTESTAZIONE FISSA (MENU DESKTOP + TITOLO) === -->
+<div class="fixed-header">
+  <nav class="desktop-menu">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('photos_page') }}">Photo</a>
+    <a href="{{ url_for('videos_page') }}">Video</a>
+    <a href="{{ url_for('biografia_page') }}">Biography</a>
+    <a href="{{ url_for('concerti_page') }}">Events</a>
+    <a href="{{ url_for('shop_page') }}">Shop</a>
+    <a href="{{ url_for('contact_page') }}" class="active">Contacts</a>
+  </nav>
+
+  <header class="site-header subpage-top">
+    <h1>FUNKTRAIL</h1>
+    <p class="subtitle">Contacts</p>
+  </header>
+</div>
+
+<div class="header-space"></div>
+
+
+<!-- === CONTENUTO SCROLLABILE === -->
+<main class="scroll-wrapper">
+  <div class="scrollable-content">
+    <div class="contact-card">
+      <div class="contact-content">
+        <pre>{{ contact_info }}</pre>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<!-- === FOOTER === -->
+<footer class="site-footer">
+  <small>© 2025 FunkTrail.it — Tutti i diritti riservati</small>
+</footer>
+
+
+<!-- === SCRIPT MENU MOBILE POPUP === -->
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    if (menu) menu.classList.toggle("active");
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        const menu = document.getElementById("mobileMenu");
+        if (menu) menu.classList.remove("active");
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

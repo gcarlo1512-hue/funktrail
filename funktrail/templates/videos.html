@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FunkTrail — Video</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- Icona hamburger per smartphone -->
+<div class="mobile-menu-icon" onclick="toggleMenu()">☰</div>
+
+<!-- Menu mobile popup ridotto -->
+<nav id="mobileMenu" class="mobile-menu">
+  <a href="{{ url_for('index') }}">Home</a>
+  <a href="{{ url_for('photos_page') }}">Photo</a>
+  <a href="{{ url_for('videos_page') }}">Video</a>
+  <a href="{{ url_for('biografia_page') }}">Biography</a>
+  <a href="{{ url_for('concerti_page') }}">Events</a>
+  <a href="{{ url_for('shop_page') }}">Shop</a>
+  <a href="{{ url_for('contact_page') }}">Contacts</a>
+</nav>
+
+<!-- Parte superiore fissa -->
+<div class="top-fixed">
+  <nav class="desktop-menu">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('photos_page') }}">Photo</a>
+    <a href="{{ url_for('videos_page') }}">Video</a>
+    <a href="{{ url_for('biografia_page') }}">Biography</a>
+    <a href="{{ url_for('concerti_page') }}">Events</a>
+    <a href="{{ url_for('shop_page') }}">Shop</a>
+    <a href="{{ url_for('contact_page') }}">Contacts</a>
+  </nav>
+
+  <header class="subpage-top">
+    <h1>FUNKTRAIL</h1>
+    <p class="subtitle">Video Gallery</p>
+  </header>
+</div>
+
+<div class="header-space"></div>
+
+<main class="scroll-wrapper">
+  <div class="scroll-area container">
+    <div class="video-grid">
+
+      {% for v in videos %}
+        <!-- VIDEO LOCALE MP4 -->
+        {% if v.type == "local" %}
+        <div class="video-card" data-type="local" data-src="{{ v.video }}">
+          <video class="video-thumbnail" preload="metadata">
+            <source src="{{ v.video }}#t=0.5" type="video/mp4">
+          </video>
+          <p class="video-filename">{{ v.name }}</p>
+        </div>
+
+        <!-- VIDEO YOUTUBE -->
+        {% elif v.type == "youtube" %}
+        <div class="video-card" data-type="youtube" data-id="{{ v.id }}">
+          <img class="youtube-thumb" 
+               src="https://img.youtube.com/vi/{{ v.id }}/hqdefault.jpg" 
+               alt="{{ v.name }}">
+          <div class="youtube-play-icon">▶</div>
+          <p class="video-filename">{{ v.name }}</p>
+        </div>
+        {% endif %}
+      {% endfor %}
+
+    </div>
+  </div>
+
+  <!-- Popup fullscreen -->
+  <div class="overlay" id="overlay">
+    <span class="close-btn" id="close-overlay">&times;</span>
+
+    <!-- Container per video/iframe -->
+    <div id="popup-container"></div>
+  </div>
+
+  <!-- Script per gestire il popup -->
+  <script>
+    const overlay = document.getElementById('overlay');
+    const container = document.getElementById('popup-container');
+    const closeBtn = document.getElementById('close-overlay');
+
+    // Cattura tutte le card video
+    document.querySelectorAll('.video-card').forEach(card => {
+      card.addEventListener('click', () => {
+        overlay.style.display = 'flex';
+
+        const type = card.dataset.type;
+
+        // Svuota container prima di inserire nuovo contenuto
+        container.innerHTML = "";
+
+        if (type === "local") {
+          const src = card.dataset.src;
+          container.innerHTML = `<video src="${src}" controls autoplay style="max-width:100%; max-height:100%; border-radius:10px;"></video>`;
+        }
+
+        if (type === "youtube") {
+          const id = card.dataset.id;
+          container.innerHTML = `
+            <iframe 
+              src="https://www.youtube.com/embed/${id}?autoplay=1"
+              frameborder="0"
+              allow="autoplay; encrypted-media"
+              allowfullscreen
+              style="width:100%; height:100%; border-radius:10px;">
+            </iframe>`;
+        }
+      });
+    });
+
+    // Chiusura popup
+    closeBtn.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      container.innerHTML = "";
+    });
+  </script>
+</main>
+
+<footer class="site-footer">
+  <small>© 2025 FunkTrail.it — Tutti i diritti riservati</small>
+</footer>
+
+<!-- Script menu mobile -->
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    if (menu) menu.classList.toggle("active");
+  }
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        const menu = document.getElementById("mobileMenu");
+        if (menu) menu.classList.remove("active");
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
