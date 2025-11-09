@@ -28,10 +28,35 @@
   <main class="home-cover">
     <img src="{{ cover_image }}" alt="Copertina FunkTrail" class="cover-image">
     <img src="static/img/logo.jpg" class="logo" alt="Logo FunkTrail">
+
+
+
+<div id="go-button" onclick="openYouTube()">
+  <span class="go-text">GO</span>
+  <span class="youtube-icon">▶</span>
+</div>
+
+    
     <header class="site-header">
       <h1>FUNKTRAIL</h1>
       <p class="subtitle">Groove • Soul • Jazz Funk</p>
     </header>
+
+
+
+<!-- ✅ OVERLAY popup YouTube -->
+<div id="youtube-overlay">
+  <span id="close-popup" onclick="closeYouTube()">✕</span>
+
+  <div id="youtube-container">
+    <iframe id="youtube-frame"
+            src=""
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+  </div>
+</div>
+    
 <nav class="desktop-menu">
   <a href="{{ url_for('index') }}">Home</a>
   <a href="{{ url_for('photos_page') }}">Photo</a>
@@ -68,6 +93,34 @@
     });
   });
 </script>
+
+<script>
+  function openYouTube() {
+    const overlay = document.getElementById("youtube-overlay");
+    const iframe = document.getElementById("youtube-frame");
+
+    // Sostituisci con il tuo ID YouTube
+    const videoID = "MXjTeIARXBA";
+
+    iframe.src = `https://www.youtube.com/embed/${videoID}?autoplay=1`;
+    overlay.style.display = "flex";
+
+    // Disabilita lo scroll sotto
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeYouTube() {
+    const overlay = document.getElementById("youtube-overlay");
+    const iframe = document.getElementById("youtube-frame");
+
+    iframe.src = ""; // ferma playback
+    overlay.style.display = "none";
+
+    // Riabilita scroll
+    document.body.style.overflow = "";
+  }
+</script>
+
 
 </body>
 </html>
