@@ -614,9 +614,9 @@ nav a.active, nav a:hover {
   }
 
   .logo {
-      width: 130px;
-      top: 20px;
-      left: 20px;
+      width: 70px;
+      top: 9px;
+      left: 9px;
   }
 }
 
@@ -929,7 +929,7 @@ body.contact .contact-content {
   /* 🎯 POSIZIONE TITOLI HOMEPAGE — SOLO VERSIONE SMARTPHONE   */
   /* ========================================================= */
   body.home .site-header {
-      top: 28% !important;       /* 🔸 sposta verticalmente il blocco titoli */
+      top: 18% !important;       /* 🔸 sposta verticalmente il blocco titoli */
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
@@ -1072,5 +1072,34 @@ body.contact .contact-content {
     top: 15px;
     right: 15px;
     font-size: 2em;
+  }
+}
+
+
+/* ✅ Riduzione overlay audio YouTube su smartphone */
+@media (max-width: 600px) {
+
+  #unmute-overlay-videos {
+    font-size: 1em !important;       /* ✅ Testo più piccolo */
+    text-shadow: 0 0 5px #000;
+    padding: 10px;
+  }
+
+  #unmute-overlay-videos::before {
+    font-size: 1.6em !important;     /* ✅ Freccia più piccola */
+  }
+}
+
+/* ✅ Riduzione overlay audio YouTube — HOMEPAGE (smartphone) */
+@media (max-width: 600px) {
+
+  #unmute-overlay-index {
+    font-size: 1em !important;       /* ✅ Testo più piccolo */
+    text-shadow: 0 0 5px #000;
+    padding: 10px;
+  }
+
+  #unmute-overlay-index::before {
+    font-size: 1.6em !important;     /* ✅ Freccia più piccola */
   }
 }
