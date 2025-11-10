@@ -76,10 +76,30 @@
     <span class="close-btn" id="close-overlay">&times;</span>
 
     <!-- Container per video/iframe -->
-    <div id="popup-container"></div>
+    <div id="popup-container" style="position:relative;"></div>
+
+    <!-- ✅ Overlay per attivare audio -->
+    <div id="unmute-overlay-videos"
+         onclick="unmuteVideoGallery()"
+         style="
+           display:none;
+           position:fixed;
+           top:0; left:0;
+           width:100vw; height:100vh;
+           background:rgba(0,0,0,0.25);
+           color:#fff;
+           font-size:2em;
+           display:flex;
+           justify-content:center;
+           align-items:center;
+           text-shadow:0 0 10px #000;
+           z-index:5001;
+           cursor:pointer;">
+      ▶ Tocca per attivare audio
+    </div>
   </div>
 
-  <!-- Script per gestire il popup -->
+  <!-- Script per popup video -->
   <script>
     const overlay = document.getElementById('overlay');
     const container = document.getElementById('popup-container');
@@ -89,27 +109,33 @@
     document.querySelectorAll('.video-card').forEach(card => {
       card.addEventListener('click', () => {
         overlay.style.display = 'flex';
+        container.innerHTML = "";
 
         const type = card.dataset.type;
 
-        // Svuota container prima di inserire nuovo contenuto
-        container.innerHTML = "";
-
+        // VIDEO LOCALE
         if (type === "local") {
           const src = card.dataset.src;
-          container.innerHTML = `<video src="${src}" controls autoplay style="max-width:100%; max-height:100%; border-radius:10px;"></video>`;
+          container.innerHTML = `
+            <video src="${src}" controls autoplay 
+                   style="max-width:100%; max-height:100%; border-radius:10px;">
+            </video>`;
         }
 
+        // VIDEO YOUTUBE
         if (type === "youtube") {
           const id = card.dataset.id;
           container.innerHTML = `
-            <iframe
-            src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1"
+            <iframe 
+              src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1"
               frameborder="0"
               allow="autoplay; encrypted-media"
               allowfullscreen
               style="width:100%; height:100%; border-radius:10px;">
             </iframe>`;
+
+          // mostra overlay "Tocca per attivare audio"
+          document.getElementById("unmute-overlay-videos").style.display = "flex";
         }
       });
     });
@@ -118,8 +144,25 @@
     closeBtn.addEventListener('click', () => {
       overlay.style.display = 'none';
       container.innerHTML = "";
+      document.getElementById("unmute-overlay-videos").style.display = "none";
     });
+
+    // funzione per togliere il mute
+    function unmuteVideoGallery() {
+      const overlayButton = document.getElementById("unmute-overlay-videos");
+      const container = document.getElementById('popup-container');
+
+      const iframe = container.querySelector('iframe');
+
+      if (iframe) {
+        const current = iframe.src.replace("mute=1", "mute=0");
+        iframe.src = current;
+      }
+
+      overlayButton.style.display = "none";
+    }
   </script>
+
 </main>
 
 <footer class="site-footer">
