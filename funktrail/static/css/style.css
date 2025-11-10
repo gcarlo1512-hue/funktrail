@@ -7,7 +7,12 @@ html, body {
     background: #000;
     color: #fff;
 }
-body.home { overflow: hidden; }
+
+body.home {
+    overflow-x: hidden;  /* blocca solo scroll orizzontale */
+    overflow-y: auto;    /* permette scroll verticale → overlay visibile */
+}
+
 
 /* COPERTINA FULLSCREEN */
 .home-cover {
@@ -22,7 +27,7 @@ body.home { overflow: hidden; }
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     z-index: 0;
     filter: brightness(0.75);
 }
@@ -1102,4 +1107,9 @@ body.contact .contact-content {
   #unmute-overlay-index::before {
     font-size: 1.6em !important;     /* ✅ Freccia più piccola */
   }
+}
+
+
+#youtube-overlay {
+  z-index: 99999 !important;
 }
