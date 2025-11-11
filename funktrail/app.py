@@ -96,11 +96,16 @@ def shop_page():
     shop_items = []
 
     price_list = {
-        'cappellino': '20.00',
-        'logo': '15.00',
-        'maglietta': '10.00',
-        'orologio': '12.00',
-        'poster': '30.00',
+        'cappellino arancio': ' 15.00',
+        'cappellino nero': ' 15.00',
+        'jeans blu chiaro': ' 50.00',
+        'jeans blu scuro': ' 50.00',
+        'jeans nero': ' 50.00',
+        't-shirt arancione': ' 20.00',
+        't-shirt blu': ' 20.00',     
+        't-shirt nera': ' 20.00',
+        't-shirt rossa': ' 20.00',
+        't-shirt verde': ' 20.00',
     }
 
     if os.path.exists(shop_folder):
