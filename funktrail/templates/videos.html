@@ -78,7 +78,7 @@
     <!-- Container per video/iframe -->
     <div id="popup-container" style="position:relative;"></div>
 
-    <!-- ✅ Overlay per attivare audio -->
+    <!-- ✅ Overlay per attivare audio (solo per YouTube) -->
     <div id="unmute-overlay-videos"
          onclick="unmuteVideoGallery()"
          style="
@@ -99,11 +99,22 @@
     </div>
   </div>
 
+  <!-- YouTube API (UNA SOLA VOLTA) -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    let videoPopupPlayer = null;
+
+    function onYouTubeIframeAPIReady() {
+      console.log("API YouTube pronta per Galleria Video");
+    }
+  </script>
+
   <!-- Script per popup video -->
   <script>
-    const overlay = document.getElementById('overlay');
+    const overlay   = document.getElementById('overlay');
     const container = document.getElementById('popup-container');
-    const closeBtn = document.getElementById('close-overlay');
+    const closeBtn  = document.getElementById('close-overlay');
+    const unmuteUI  = document.getElementById('unmute-overlay-videos');
 
     // Cattura tutte le card video
     document.querySelectorAll('.video-card').forEach(card => {
@@ -113,29 +124,36 @@
 
         const type = card.dataset.type;
 
-        // VIDEO LOCALE
         if (type === "local") {
+          // === VIDEO LOCALE (MP4): nessun overlay audio ===
           const src = card.dataset.src;
+
+          // Se c'era un player YT aperto, lo chiudo/pulisco
+          if (videoPopupPlayer) {
+            try { videoPopupPlayer.stopVideo(); videoPopupPlayer.destroy(); } catch(e){}
+            videoPopupPlayer = null;
+          }
+          unmuteUI.style.display = "none";
+
           container.innerHTML = `
             <video src="${src}" controls autoplay 
                    style="max-width:100%; max-height:100%; border-radius:10px;">
             </video>`;
-        }
-
-        // VIDEO YOUTUBE
-        if (type === "youtube") {
+        } else if (type === "youtube") {
+          // === VIDEO YOUTUBE: parte muto + overlay "attiva audio" ===
           const id = card.dataset.id;
+
           container.innerHTML = `
             <iframe 
-              src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1"
+              id="youtube-player-popup"
+              src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1&enablejsapi=1"
               frameborder="0"
-              allow="autoplay; encrypted-media"
+              allow="autoplay; encrypted-media; picture-in-picture"
               allowfullscreen
               style="width:100%; height:100%; border-radius:10px;">
             </iframe>`;
 
-          // mostra overlay "Tocca per attivare audio"
-          document.getElementById("unmute-overlay-videos").style.display = "flex";
+          unmuteUI.style.display = "flex";
         }
       });
     });
@@ -144,22 +162,45 @@
     closeBtn.addEventListener('click', () => {
       overlay.style.display = 'none';
       container.innerHTML = "";
-      document.getElementById("unmute-overlay-videos").style.display = "none";
+      unmuteUI.style.display = "none";
+
+      // Ferma e distruggi player YouTube se esiste
+      if (videoPopupPlayer) {
+        try { videoPopupPlayer.stopVideo(); videoPopupPlayer.destroy(); } catch(e){}
+        videoPopupPlayer = null;
+      }
     });
 
-    // funzione per togliere il mute
+    // Funzione per togliere il mute su YouTube (identico alla home)
     function unmuteVideoGallery() {
-      const overlayButton = document.getElementById("unmute-overlay-videos");
-      const container = document.getElementById('popup-container');
+      const iframeId = "youtube-player-popup";
 
-      const iframe = container.querySelector('iframe');
-
-      if (iframe) {
-        const current = iframe.src.replace("mute=1", "mute=0");
-        iframe.src = current;
+      // Se il player esiste già
+      if (videoPopupPlayer && typeof videoPopupPlayer.unMute === "function") {
+        try {
+          videoPopupPlayer.mute();
+          videoPopupPlayer.unMute();
+          videoPopupPlayer.playVideo();
+        } catch(e) { console.warn(e); }
+        unmuteUI.style.display = "none";
+        return;
       }
 
-      overlayButton.style.display = "none";
+      // Altrimenti crealo sull'iframe esistente
+      try {
+        videoPopupPlayer = new YT.Player(iframeId, {
+          events: {
+            onReady: function (event) {
+              event.target.mute();      // passaggio richiesto da YouTube
+              event.target.unMute();    // sblocca audio
+              event.target.playVideo(); // continua senza riavvio
+              unmuteUI.style.display = "none";
+            }
+          }
+        });
+      } catch (e) {
+        console.error("YT.Player non disponibile ancora:", e);
+      }
     }
   </script>
 
@@ -184,6 +225,8 @@
     });
   });
 </script>
+
+
 
 </body>
 </html>
