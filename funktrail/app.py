@@ -106,6 +106,9 @@ def shop_page():
         't-shirt nera': ' 20.00',
         't-shirt rossa': ' 20.00',
         't-shirt verde': ' 20.00',
+        'zainetto': ' 50.00',
+        'zainetto 1': ' 50.00',
+        'zainetto 2': ' 50.00',
     }
 
     if os.path.exists(shop_folder):
