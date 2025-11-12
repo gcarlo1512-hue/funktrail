@@ -650,18 +650,26 @@ nav a.active, nav a:hover {
   font-size: 1.1em;
   line-height: 1.8em;
   white-space: pre-wrap;
+  word-wrap: break-word;       /* ✅ spezza parole troppo lunghe */
+  overflow-wrap: break-word;   /* ✅ compatibilità browser moderni */
+  width: 100%;                 /* ✅ impedisce testo oltre il box */
+  box-sizing: border-box;
 }
 
-.contact-content pre {
+.contact-content pre,
+.contact-pre {
   background: transparent;
   color: #fff;
   border: none;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  white-space: pre-wrap;       /* ✅ mantiene i ritorni a capo del file */
+  word-wrap: break-word;       /* ✅ manda a capo le righe lunghe */
+  overflow-wrap: break-word;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px 10px;           /* ✅ margine interno per leggibilità */
 }
 
-/* ========================================================= */
-/* 🧭 BLOCCA LO SCROLL SOLO NELLA PAGINA CONTACT             */
-/* ========================================================= */
 
 body.contact {
   overflow: hidden;   /* disattiva lo scroll della pagina */
@@ -784,7 +792,7 @@ body.contact .contact-card {
   border: none;                  /* ✅ rimuove il bordo */
   box-shadow: none;              /* ✅ niente ombra */
   color: #fff;
-  font-size: 1em;                /* ✅ testo più piccolo e leggibile */
+  font-size: 0.6em;                /* ✅ testo più piccolo e leggibile */
   line-height: 1.6;
   text-align: left;              /* ✅ testo allineato naturale */
   overflow-y: visible;           /* ✅ nessun taglio */
@@ -806,7 +814,7 @@ nav.desktop-menu {
   top: 15px;
   right: 20px;
   z-index: 3000;
-  font-size: 2em;
+  font-size: 2.5em;
   cursor: pointer;
   color: #fff;
 }
