@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FunkTrail — Biografia</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- === MENU MOBILE POPUP RIDOTTO (solo smartphone) === -->
+<div class="mobile-menu-icon" onclick="toggleMenu()">☰</div>
+
+<nav id="mobileMenu" class="mobile-menu">
+  <a href="{{ url_for('index') }}">Home</a>
+  <a href="{{ url_for('photos_page') }}">Photo</a>
+  <a href="{{ url_for('videos_page') }}">Video</a>
+  <a href="{{ url_for('biografia_page') }}">Biography</a>
+  <a href="{{ url_for('concerti_page') }}">Events</a>
+  <a href="{{ url_for('shop_page') }}">Shop</a>
+  <a href="{{ url_for('contact_page') }}">Contacts</a>
+</nav>
+
+<!-- === INTESTAZIONE FISSA === -->
+<div class="top-fixed">
+  <nav class="desktop-menu">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('photos_page') }}">Photo</a>
+    <a href="{{ url_for('videos_page') }}">Video</a>
+    <a href="{{ url_for('biografia_page') }}">Biography</a>
+    <a href="{{ url_for('concerti_page') }}">Events</a>
+    <a href="{{ url_for('shop_page') }}">Shop</a>
+    <a href="{{ url_for('contact_page') }}">Contacts</a>
+  </nav>
+
+  <header class="subpage-top">
+    <h1>FUNKTRAIL</h1>
+    <p class="subtitle">Biography</p>
+  </header>
+</div>
+
+<div class="header-space"></div>
+
+<!-- === CONTENUTO SCROLLABILE === -->
+<main class="scroll-wrapper">
+  <div class="scroll-area container bio-page">
+
+    {% for block in bio_blocks %}
+    <div class="bio-row">
+      <div class="bio-colonna bio-foto">
+        <img src="{{ block.image }}" alt="Foto Biografia">
+      </div>
+      
+      <div class="bio-colonna bio-testo">
+        <p>{{ block.text }}</p>
+      </div>
+
+      
+    </div>
+    {% endfor %}
+
+  </div>
+</main>
+
+<!-- === FOOTER === -->
+<footer class="site-footer">
+  <small>© 2025 FunkTrail.it — Tutti i diritti riservati</small>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    if (menu) menu.classList.toggle("active");
+  }
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        const menu = document.getElementById("mobileMenu");
+        if (menu) menu.classList.remove("active");
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

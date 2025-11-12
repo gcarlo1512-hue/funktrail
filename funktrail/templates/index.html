@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FunkTrail — Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="home">
+
+<!-- === MENU MOBILE POPUP === -->
+<div class="mobile-menu-icon" onclick="toggleMenu()">☰</div>
+
+<nav id="mobileMenu" class="mobile-menu">
+  <a href="{{ url_for('index') }}">Home</a>
+  <a href="{{ url_for('photos_page') }}">Photo</a>
+  <a href="{{ url_for('videos_page') }}">Video</a>
+  <a href="{{ url_for('biografia_page') }}">Biography</a>
+  <a href="{{ url_for('concerti_page') }}">Events</a>
+  <a href="{{ url_for('shop_page') }}">Shop</a>
+  <a href="{{ url_for('contact_page') }}">Contacts</a>
+</nav>
+<!-- === FINE MENU MOBILE === -->
+
+<main class="home-cover">
+
+  <img src="{{ cover_image }}" alt="Copertina FunkTrail" class="cover-image">
+  <img src="static/img/logo.jpg" class="logo" alt="Logo FunkTrail">
+
+  <!-- PULSANTE GO -->
+  <div id="go-button" onclick="openYouTube()">
+    <span class="go-text">GO</span>
+    <span class="youtube-icon">▶</span>
+  </div>
+
+  <!-- TITOLO -->
+  <header class="site-header">
+    <h1>FUNKTRAIL</h1>
+    <p class="subtitle">Groove • Soul • Jazz Funk</p>
+  </header>
+
+  <!-- ✅ OVERLAY popup YouTube -->
+  <div id="youtube-overlay">
+    <span id="close-popup" onclick="closeYouTube()">✕</span>
+
+    <div id="youtube-container" style="position:relative">
+
+      <iframe id="youtube-frame"
+
+              src="https://www.youtube.com/embed/MXjTeIARXBA?autoplay=1&mute=1&playsinline=1&enablejsapi=1"
+              frameborder="0"
+              allow="autoplay; encrypted-media"
+              allowfullscreen></iframe>
+
+      <!-- ✅ Overlay per attivare audio -->
+      <div id="unmute-overlay-index" 
+           onclick="unmuteYouTubeIndex()"
+           style="
+             position:absolute;
+             top:0; left:0;
+             width:100%;
+             height:100%;
+             display:none;
+             justify-content:center;
+             align-items:center;
+             cursor:pointer;
+             background:rgba(0,0,0,0.25);
+             z-index:7000;
+             font-size:2em;
+             color:#fff;
+             text-shadow:0 0 10px #000;">
+        ▶ Tocca per attivare audio
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MENU DESKTOP -->
+  <nav class="desktop-menu">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('photos_page') }}">Photo</a>
+    <a href="{{ url_for('videos_page') }}">Video</a>
+    <a href="{{ url_for('biografia_page') }}">Biography</a>
+    <a href="{{ url_for('concerti_page') }}">Events</a>
+    <a href="{{ url_for('shop_page') }}">Shop</a>
+    <a href="{{ url_for('contact_page') }}">Contacts</a>
+  </nav>
+
+</main>
+
+<footer class="site-footer">
+  <small>© 2025 FunkTrail.it — Tutti i diritti riservati</small>
+</footer>
+
+<!-- ============================== -->
+<!--        SCRIPT MENU MOBILE      -->
+<!-- ============================== -->
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    if (menu) menu.classList.toggle("active");
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        const menu = document.getElementById("mobileMenu");
+        if (menu) menu.classList.remove("active");
+      });
+    });
+  });
+</script>
+
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  let player;
+
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('youtube-frame', {
+    events: {
+      'onReady': onPlayerReady
+    }
+  });
+}
+
+function onPlayerReady(event) {
+  console.log("Player YouTube pronto");
+}
+
+</script>
+
+
+
+<!-- ============================== -->
+<!--           YOUTUBE POPUP        -->
+<!-- ============================== -->
+<script>
+  function openYouTube() {
+    const overlay = document.getElementById("youtube-overlay");
+    const iframe = document.getElementById("youtube-frame");
+    const unmuteOverlay = document.getElementById("unmute-overlay-index");
+
+    const videoID = "MXjTeIARXBA";
+
+    // Avvio immediato MUTED
+
+    iframe.src = `https://www.youtube.com/embed/${videoID}?autoplay=1&mute=1&playsinline=1&enablejsapi=1`;
+    overlay.style.display = "flex";
+    unmuteOverlay.style.display = "flex";
+
+    // Blocca scroll sotto
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeYouTube() {
+    const overlay = document.getElementById("youtube-overlay");
+    const iframe = document.getElementById("youtube-frame");
+
+    iframe.src = ""; // Stop
+    overlay.style.display = "none";
+
+    // Riabilita scroll
+    document.body.style.overflow = "";
+  }
+
+function unmuteYouTubeIndex() {
+  const unmuteOverlay = document.getElementById("unmute-overlay-index");
+  unmuteOverlay.style.display = "none";
+
+  if (player && player.unMute) {
+    // YouTube richiede questo passaggio
+    player.mute();      // 1) forza stato mute
+    player.unMute();    // 2) ora l’unmute funziona
+    player.playVideo(); // 3) avvia video con audio
+  } else {
+    console.warn("Player non pronto");
+  }
+}
+
+  
+</script>
+
+</body>
+</html>
