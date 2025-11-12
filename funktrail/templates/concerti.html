@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FunkTrail — Events</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- === MENU MOBILE POPUP RIDOTTO (solo smartphone) === -->
+<div class="mobile-menu-icon" onclick="toggleMenu()">☰</div>
+
+<nav id="mobileMenu" class="mobile-menu">
+  <a href="{{ url_for('index') }}">Home</a>
+  <a href="{{ url_for('photos_page') }}">Photo</a>
+  <a href="{{ url_for('videos_page') }}">Video</a>
+  <a href="{{ url_for('biografia_page') }}">Biography</a>
+  <a href="{{ url_for('concerti_page') }}" class="active">Events</a>
+  <a href="{{ url_for('shop_page') }}">Shop</a>
+  <a href="{{ url_for('contact_page') }}">Contacts</a>
+</nav>
+<!-- === FINE MENU MOBILE === -->
+
+
+<!-- === INTESTAZIONE FISSA (MENU DESKTOP + TITOLO) === -->
+<div class="top-fixed">
+  <nav class="desktop-menu">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('photos_page') }}">Photo</a>
+    <a href="{{ url_for('videos_page') }}">Video</a>
+    <a href="{{ url_for('biografia_page') }}">Biography</a>
+    <a href="{{ url_for('concerti_page') }}" class="active">Events</a>
+    <a href="{{ url_for('shop_page') }}">Shop</a>
+    <a href="{{ url_for('contact_page') }}">Contacts</a>
+  </nav>
+
+  <header class="subpage-top">
+    <h1>FUNKTRAIL</h1>
+    <p class="subtitle">Events</p>
+  </header>
+</div>
+
+<div class="header-space"></div>
+
+
+<!-- === CONTENUTO SCROLLABILE === -->
+<main class="scroll-wrapper">
+  <div class="scroll-area container">
+
+    <!-- 🔸 EVENTO 1 -->
+    <div class="bio-row">
+      <div class="bio-colonna bio-foto">
+        <p class="data-concerto">15 Nov 2025</p>
+      </div>
+      <div class="bio-colonna bio-testo">
+        <p><strong>Al Corner - Mareno di Piave</strong> — Ore 21:00</p>
+      </div>
+    </div>
+
+    <!-- 🔸 EVENTO 2 -->
+    <div class="bio-row">
+      <div class="bio-colonna bio-foto">
+        <p class="data-concerto">30 Dic 2025</p>
+      </div>
+      <div class="bio-colonna bio-testo">
+        <p><strong>AL Vapore - Mestre</strong> — Ingresso libero</p>
+      </div>
+    </div>
+
+    <!-- 🔸 EVENTO 3 -->
+    <div class="bio-row">
+      <div class="bio-colonna bio-foto">
+        <p class="data-concerto">12 Gen 2026</p>
+      </div>
+      <div class="bio-colonna bio-testo">
+        <p><strong>Jazz Club Padova</strong> — Con special guest</p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+
+<!-- === FOOTER === -->
+<footer class="site-footer">
+  <small>© 2025 FunkTrail.com — Tutti i diritti riservati</small>
+</footer>
+
+
+<!-- === SCRIPT MENU MOBILE POPUP === -->
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    if (menu) menu.classList.toggle("active");
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        const menu = document.getElementById("mobileMenu");
+        if (menu) menu.classList.remove("active");
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

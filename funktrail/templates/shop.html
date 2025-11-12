@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FunkTrail — Shop</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- === MENU MOBILE POPUP RIDOTTO (solo smartphone) === -->
+<div class="mobile-menu-icon" onclick="toggleMenu()">☰</div>
+
+<nav id="mobileMenu" class="mobile-menu">
+  <a href="{{ url_for('index') }}">Home</a>
+  <a href="{{ url_for('photos_page') }}">Photo</a>
+  <a href="{{ url_for('videos_page') }}">Video</a>
+  <a href="{{ url_for('biografia_page') }}">Biography</a>
+  <a href="{{ url_for('concerti_page') }}">Events</a>
+  <a href="{{ url_for('shop_page') }}" class="active">Shop</a>
+  <a href="{{ url_for('contact_page') }}">Contacts</a>
+</nav>
+<!-- === FINE MENU MOBILE === -->
+
+
+<!-- === INTESTAZIONE FISSA (MENU DESKTOP + TITOLO) === -->
+<div class="fixed-header">
+  <nav class="desktop-menu">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('photos_page') }}">Photo</a>
+    <a href="{{ url_for('videos_page') }}">Video</a>
+    <a href="{{ url_for('biografia_page') }}">Biography</a>
+    <a href="{{ url_for('concerti_page') }}">Events</a>
+    <a href="{{ url_for('shop_page') }}" class="active">Shop</a>
+    <a href="{{ url_for('contact_page') }}">Contacts</a>
+  </nav>
+
+  <header class="site-header subpage-top">
+    <h1>FUNKTRAIL</h1>
+    <p class="subtitle">Shop</p>
+  </header>
+</div>
+
+<div class="header-space"></div>
+
+
+<!-- === CONTENUTO SCROLLABILE === -->
+<main class="scroll-wrapper">
+  <div class="scrollable-content">
+    <div class="container">
+      <div class="shop-grid">
+        {% for product in products %}
+        <div class="shop-card" onclick="openPopup('{{ product.name }}', '{{ product.image }}', '{{ product.price }}')">
+          <img class="shop-image" src="{{ product.image }}" alt="{{ product.name }}">
+          <p class="shop-name">{{ product.name }}</p>
+          <p class="shop-price">€{{ product.price }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- === POPUP PRODOTTI === -->
+  <div id="popup" class="popup" style="display:none;">
+    <div class="popup-content">
+      <span class="close" onclick="closePopup()">&times;</span>
+      <img id="popup-img" src="" alt="">
+      <p id="popup-name"></p>
+      <p id="popup-price"></p>
+    </div>
+  </div>
+</main>
+
+
+<!-- === FOOTER === -->
+<footer class="site-footer">
+  <small>© 2025 FunkTrail.com — Tutti i diritti riservati</small>
+</footer>
+
+
+<!-- === SCRIPT POPUP SHOP === -->
+<script>
+  function openPopup(name, img, price) {
+    document.getElementById('popup-img').src = img;
+    document.getElementById('popup-name').innerText = name;
+    document.getElementById('popup-price').innerText = 'Prezzo: €' + price;
+    document.getElementById('popup').style.display = 'flex';
+  }
+
+  function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+  }
+</script>
+
+
+<!-- === SCRIPT MENU MOBILE POPUP === -->
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    if (menu) menu.classList.toggle("active");
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        const menu = document.getElementById("mobileMenu");
+        if (menu) menu.classList.remove("active");
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

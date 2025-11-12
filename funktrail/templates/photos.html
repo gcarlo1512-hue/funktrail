@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FunkTrail — Foto</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    /* Blocca il click sul menu solo su desktop quando il popup è aperto */
+    @media (min-width: 601px) {
+      body.popup-active .mobile-menu-icon {
+        pointer-events: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Icona hamburger per smartphone -->
+<div class="mobile-menu-icon" onclick="toggleMenu()">☰</div>
+
+<!-- Menu mobile popup ridotto -->
+<nav id="mobileMenu" class="mobile-menu">
+  <a href="{{ url_for('index') }}">Home</a>
+  <a href="{{ url_for('photos_page') }}">Photo</a>
+  <a href="{{ url_for('videos_page') }}">Video</a>
+  <a href="{{ url_for('biografia_page') }}">Biography</a>
+  <a href="{{ url_for('concerti_page') }}">Events</a>
+  <a href="{{ url_for('shop_page') }}">Shop</a>
+  <a href="{{ url_for('contact_page') }}">Contacts</a>
+</nav>
+
+<!-- Parte superiore fissa: menu desktop + titolo -->
+<div class="top-fixed">
+  <nav class="desktop-menu">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('photos_page') }}">Photo</a>
+    <a href="{{ url_for('videos_page') }}">Video</a>
+    <a href="{{ url_for('biografia_page') }}">Biography</a>
+    <a href="{{ url_for('concerti_page') }}">Events</a>
+    <a href="{{ url_for('shop_page') }}">Shop</a>
+    <a href="{{ url_for('contact_page') }}">Contacts</a>
+  </nav>
+
+  <header class="subpage-top">
+    <h1>FUNKTRAIL</h1>
+    <p class="subtitle">Photo Gallery</p>
+  </header>
+</div>
+
+<div class="header-space"></div>
+
+<main class="scroll-wrapper">
+  <!-- Parte inferiore scrollabile: foto -->
+  <div class="scroll-area container">
+    <div class="photo-grid">
+      {% for p in photos %}
+      <div class="photo-card">
+        <img src="{{ p }}" class="photo-thumbnail" alt="Foto FunkTrail">
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Overlay immagine -->
+  <div class="overlay" id="overlay">
+    <img id="overlay-img" style="display:none;">
+  </div>
+
+  <!-- Script per popup immagine -->
+  <script>
+    const overlay = document.getElementById('overlay');
+    const overlayImg = document.getElementById('overlay-img');
+
+    // Apri la foto cliccando sulla miniatura
+    document.querySelectorAll('.photo-thumbnail').forEach(img => {
+      img.addEventListener('click', () => {
+        overlay.style.display = 'flex';
+        overlayImg.src = img.src;
+        overlayImg.style.display = 'block';
+        // Blocca il menu solo su desktop
+        if (window.innerWidth > 600) {
+          document.body.classList.add('popup-active');
+        }
+      });
+    });
+
+    // Chiudi cliccando sulla foto
+    overlayImg.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      overlayImg.src = '';
+      document.body.classList.remove('popup-active');
+    });
+  </script>
+</main>
+
+<footer class="site-footer">
+  <small>© 2025 FunkTrail.com — Tutti i diritti riservati</small>
+</footer>
+
+<!-- Script per il menu mobile popup -->
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    if (menu) menu.classList.toggle("active");
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        const menu = document.getElementById("mobileMenu");
+        if (menu) menu.classList.remove("active");
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
