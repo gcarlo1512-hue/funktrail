@@ -1121,3 +1121,37 @@ body.contact .contact-content {
 #youtube-overlay {
   z-index: 99999 !important;
 }
+
+
+/* ========================================================= */
+/* ✨ SCRITTA LAMPEGGIANTE "TOCCA QUI" SOPRA AL PULSANTE GO   */
+/* ========================================================= */
+#tap-hint {
+  position: absolute;
+  bottom: 32%;                 /* posizione sopra al pulsante GO */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5em;
+  color: rgba(255,255,255,0.7);
+  text-shadow: 0 0 10px rgba(255,255,255,0.6);
+  animation: blink-text 1s infinite alternate;
+  z-index: 4100;
+  pointer-events: none;         /* evita di bloccare il click sul pulsante */
+  letter-spacing: 3px;
+  font-weight: bold;
+}
+
+/* effetto lampeggiante */
+@keyframes blink-text {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+/* versione smartphone: un po’ più piccola e spostata */
+@media (max-width: 600px) {
+  #tap-hint {
+    bottom: 29%;
+    font-size: 1em;
+  }
+}
